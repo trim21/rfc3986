@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Module containing the logic for the URIBuilder object."""
+import typing as t
 from urllib.parse import parse_qsl
 from urllib.parse import urlencode
 
@@ -33,13 +34,13 @@ class URIBuilder:
 
     def __init__(
         self,
-        scheme=None,
-        userinfo=None,
-        host=None,
-        port=None,
-        path=None,
-        query=None,
-        fragment=None,
+        scheme: t.Optional[str] = None,
+        userinfo: t.Optional[str] = None,
+        host: t.Optional[str] = None,
+        port: t.Optional[int] = None,
+        path: t.Optional[str] = None,
+        query: t.Optional[str] = None,
+        fragment: t.Optional[str] = None,
     ):
         """Initialize our URI builder.
 
@@ -76,7 +77,7 @@ class URIBuilder:
         return formatstr.format(b=self)
 
     @classmethod
-    def from_uri(cls, reference):
+    def from_uri(cls, reference) -> "URIBuilder":
         """Initialize the URI builder from another URI.
 
         Takes the given URI reference and creates a new URI builder instance
@@ -119,7 +120,7 @@ class URIBuilder:
             fragment=self.fragment,
         )
 
-    def add_credentials(self, username, password):
+    def add_credentials(self, username: str, password: t.Optional[str] = None):
         """Add credentials as the userinfo portion of the URI.
 
         .. code-block:: python
@@ -152,7 +153,7 @@ class URIBuilder:
             fragment=self.fragment,
         )
 
-    def add_host(self, host):
+    def add_host(self, host: str):
         """Add hostname to the URI.
 
         .. code-block:: python
@@ -172,7 +173,7 @@ class URIBuilder:
             fragment=self.fragment,
         )
 
-    def add_port(self, port):
+    def add_port(self, port: int) -> "URIBuilder":
         """Add port to the URI.
 
         .. code-block:: python
@@ -205,13 +206,13 @@ class URIBuilder:
             scheme=self.scheme,
             userinfo=self.userinfo,
             host=self.host,
-            port=f"{port_int}",
+            port=port_int,
             path=self.path,
             query=self.query,
             fragment=self.fragment,
         )
 
-    def add_path(self, path):
+    def add_path(self, path: str):
         """Add a path to the URI.
 
         .. code-block:: python
